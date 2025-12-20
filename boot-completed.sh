@@ -1,5 +1,6 @@
 #!/system/bin/sh
 MODDIR=${0%/*}
+KSU_BIN=/data/adb/ksu/bin/ksud
 SUSFS_BIN=/data/adb/ksu/bin/ksu_susfs
 
 # Update Description
@@ -13,6 +14,8 @@ else
 	sed -i "s/$text1/$text2/" ${MODDIR}/module.prop
 fi
 
+# Enable kernel umount
+${KSU_BIN} feature set 1 1
 
 #### Hide the mmapped real file from various maps in /proc/self/ ####
 ## - Please note that it is better to do it in boot-completed starge
