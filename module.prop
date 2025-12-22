@@ -3,4 +3,4 @@ name=BRENE - SUSFS-FOR-KERNELSU
 version=v0.0.2
 versionCode=002
 author=rrr333nnn333, sidex15 & simonpunk@gitlab.com
-description=Status: ❌ An addon root hiding service for KernelSU compiled with patched kernel source.
+description=[Kernel: ❌, Module: ❌, Hiding: ❌] SuSFS module for custom kernels with SuSFS patches
