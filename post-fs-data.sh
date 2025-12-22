@@ -56,6 +56,7 @@ kernel_release=$(uname -r)
 kernel_release="${kernel_release/Sultan/}"
 kernel_release="${kernel_release/sultan/}"
 kernel_release="${kernel_release/🟢/}"
+kernel_release="${kernel_release}-BRENE"
 ${SUSFS_BIN} set_uname "$kernel_release" '#1 SMP PREEMPT Mon Jan 1 18:00:00 UTC 2024'
 
 
