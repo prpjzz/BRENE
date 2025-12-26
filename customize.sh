@@ -3,6 +3,27 @@ KSU_BIN=/data/adb/ksu/bin/ksud
 DEST_BIN_DIR=/data/adb/ksu/bin
 # PERSISTENT_DIR=/data/adb/susfs4ksu
 
+# Remove outdated/useless modules
+modules="
+zygisk_shamiko
+zygisk-assistant
+zygisk-maphide
+zygisk_nohello
+playintegrity
+integritybox
+IntegrityBox
+Integrity-Box
+safetynet-fix
+MagiskHidePropsConf
+tsupport
+tsupport-advance
+BetterKnownInstalled
+"
+for i in ${modules}; do
+	[ -d "/data/adb/modules/${i}" ] && touch "/data/adb/modules/${i}/remove"
+done
+
+
 if [ -z "$KSU" ]; then
 	abort '[❌] SUSFS is only for KernelSU or forks!'
 fi
@@ -42,23 +63,6 @@ if [ -d "/data/adb/modules/susfs_manager" ]; then
 	touch "/data/adb/modules/susfs_manager/disable"
 fi
 
-# Remove outdated modules
-modules="
-zygisk_shamiko
-zygisk-assistant
-zygisk-maphide
-zygisk_nohello
-playintegrity
-integritybox
-IntegrityBox
-Integrity-Box
-safetynet-fix
-MagiskHidePropsConf
-"
-for i in ${modules}; do
-	[ -d "/data/adb/modules/${i}" ] && touch "/data/adb/modules/${i}/remove"
-	# echo "/data/adb/modules/${i}/remove"
-done
 
 # echo '[✅] Preparing susfs4ksu persistent directory'
 # mkdir -p "$PERSISTENT_DIR"
