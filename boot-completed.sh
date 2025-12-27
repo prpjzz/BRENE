@@ -73,32 +73,35 @@ done
 ## First we need to wait until files are accessible in /sdcard ##
 until [ -d "/sdcard/Android/data" ]; do sleep 1; done
 
+## Next we need to set the path of /sdcard/ to tell kernel where the actual /sdcard is ##
+${SUSFS_BIN} set_sdcard_root_path /sdcard
+## Next we need to set the path of /sdcard/ to tell kernel where the actual /sdcard/Android/data is ##
+${SUSFS_BIN} set_android_data_root_path /sdcard/Android/data
+
 while true; do
-	## Next we need to set the path of /sdcard/ to tell kernel where the actual /sdcard is ##
 	${SUSFS_BIN} set_sdcard_root_path /sdcard
-	## Next we need to set the path of /sdcard/ to tell kernel where the actual /sdcard/Android/data is ##
 	${SUSFS_BIN} set_android_data_root_path /sdcard/Android/data
 
 	#### Hide the leaking app path like /sdcard/Android/data/<app_package_name> from syscall ####
 	## Now we can add the path ##
 	for i in $(ls /sdcard/Android/data); do
-		${SUSFS_BIN} add_sus_path "/sdcard/Android/data/$i"
+		${SUSFS_BIN} add_sus_path /sdcard/Android/data/${i}
 	done
 	for i in $(ls /sdcard/Android/media); do
-		${SUSFS_BIN} add_sus_path "/sdcard/Android/media/$i"
+		${SUSFS_BIN} add_sus_path /sdcard/Android/media/${i}
 	done
 	for i in $(ls /sdcard/Android/obb); do
-		${SUSFS_BIN} add_sus_path "/sdcard/Android/obb/$i"
+		${SUSFS_BIN} add_sus_path /sdcard/Android/obb/${i}
 	done
 
 	#### Hide path like /sdcard/<target_root_dir> from all user app processes without root access ####
 	## Now we can add the path ##
-	${SUSFS_BIN} add_sus_path /sdcard/TWRP
-	${SUSFS_BIN} add_sus_path /storage/emulated/TWRP
 	${SUSFS_BIN} add_sus_path /sdcard/Fox
 	${SUSFS_BIN} add_sus_path /sdcard/MT2
-	${SUSFS_BIN} add_sus_path /sdcard/AppManager
+	${SUSFS_BIN} add_sus_path /sdcard/TWRP
 	${SUSFS_BIN} add_sus_path /sdcard/OhMyFont
+	${SUSFS_BIN} add_sus_path /sdcard/AppManager
+	${SUSFS_BIN} add_sus_path /storage/emulated/TWRP
 
 	sleep 10
 done
