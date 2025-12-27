@@ -1,4 +1,3 @@
-#!/system/bin/sh
 KSU_BIN=/data/adb/ksu/bin/ksud
 DEST_BIN_DIR=/data/adb/ksu/bin
 # PERSISTENT_DIR=/data/adb/susfs4ksu

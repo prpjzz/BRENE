@@ -1,4 +1,3 @@
-#!/system/bin/sh
 MODDIR=${0%/*}
 KSU_BIN=/data/adb/ksu/bin/ksud
 SUSFS_BIN=/data/adb/ksu/bin/ksu_susfs
