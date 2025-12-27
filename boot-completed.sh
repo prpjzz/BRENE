@@ -4,16 +4,17 @@ SUSFS_BIN=/data/adb/ksu/bin/ksu_susfs
 
 # Update Description
 description=", A SuSFS module for custom kernels with SuSFS patches"
-if ${SUSFS_BIN} show version 2>/dev/null; then
+susfs_ver=$(${SUSFS_BIN} show version 2>/dev/null)
+if [ -n ${susfs_ver} ]; then
 	if [ ! -f "/data/adb/modules/rezygisk/disable" ]; then
-		new_description="description=Kernel: ✅, Module: ✅, Hiding: ✅, ReZygisk: ✅${description}"
+		new_description="description=Kernel: ${susfs_ver} ✅, Module: ✅, Hiding: ✅, ReZygisk: ✅${description}"
 		sed -i "s/^description=.*/${new_description}/" ${MODDIR}/module.prop
 	else
-		new_description="description=Kernel: ✅, Module: ✅, Hiding: ✅, ReZygisk: ❌${description}"
+		new_description="description=Kernel: ${susfs_ver} ✅, Module: ✅, Hiding: ✅${description}"
 		sed -i "s/^description=.*/${new_description}/" ${MODDIR}/module.prop
 	fi
 else
-	new_description="description=Kernel: ❌, Module: ❌, Hiding: ❌, ReZygisk: ❌${description}"
+	new_description="description=Kernel: ❌, Module: ❌, Hiding: ❌${description}"
 	sed -i "s/^description=.*/${new_description}/" ${MODDIR}/module.prop
 fi
 
