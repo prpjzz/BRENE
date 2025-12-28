@@ -78,7 +78,8 @@ ${SUSFS_BIN} set_sdcard_root_path /sdcard
 ## Next we need to set the path of /sdcard/ to tell kernel where the actual /sdcard/Android/data is ##
 ${SUSFS_BIN} set_android_data_root_path /sdcard/Android/data
 
-while true; do
+# while true; do
+for i in {0..59}; do
 	${SUSFS_BIN} set_sdcard_root_path /sdcard
 	${SUSFS_BIN} set_android_data_root_path /sdcard/Android/data
 
@@ -87,12 +88,12 @@ while true; do
 	for i in $(ls /sdcard/Android/data); do
 		${SUSFS_BIN} add_sus_path /sdcard/Android/data/${i}
 	done
-	for i in $(ls /sdcard/Android/media); do
-		${SUSFS_BIN} add_sus_path /sdcard/Android/media/${i}
-	done
-	for i in $(ls /sdcard/Android/obb); do
-		${SUSFS_BIN} add_sus_path /sdcard/Android/obb/${i}
-	done
+	# for i in $(ls /sdcard/Android/media); do
+	# 	${SUSFS_BIN} add_sus_path /sdcard/Android/media/${i}
+	# done
+	# for i in $(ls /sdcard/Android/obb); do
+	# 	${SUSFS_BIN} add_sus_path /sdcard/Android/obb/${i}
+	# done
 
 	#### Hide path like /sdcard/<target_root_dir> from all user app processes without root access ####
 	## Now we can add the path ##
@@ -103,7 +104,7 @@ while true; do
 	${SUSFS_BIN} add_sus_path /sdcard/AppManager
 	${SUSFS_BIN} add_sus_path /storage/emulated/TWRP
 
-	sleep 10
+	sleep 1
 done
 
 # EOF
