@@ -2,8 +2,8 @@ MODDIR=${0%/*}
 DEST_BIN_DIR=/data/adb/ksu/bin
 SUSFS_BIN=/data/adb/ksu/bin/ksu_susfs
 
-cp ${MODDIR}/tools/ksu_susfs ${DEST_BIN_DIR}/susfs # For development
-cp ${MODDIR}/tools/ksu_susfs ${DEST_BIN_DIR}/ksu_susfs
+cp -f ${MODDIR}/tools/ksu_susfs ${DEST_BIN_DIR}
+cp -f ${MODDIR}/tools/ksu_susfs ${DEST_BIN_DIR}/susfs # For development
 chmod 755 ${DEST_BIN_DIR}/susfs
 chmod 755 ${DEST_BIN_DIR}/ksu_susfs
 

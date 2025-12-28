@@ -42,8 +42,8 @@ if [ ! -d ${DEST_BIN_DIR} ]; then
 	abort "[❌] '${DEST_BIN_DIR}' not existed, installation aborted!"
 fi
 
-cp ${MODPATH}/tools/ksu_susfs ${DEST_BIN_DIR}/susfs # For development
-cp ${MODPATH}/tools/ksu_susfs ${DEST_BIN_DIR}/ksu_susfs
+cp -f ${MODPATH}/tools/ksu_susfs ${DEST_BIN_DIR}
+cp -f ${MODPATH}/tools/ksu_susfs ${DEST_BIN_DIR}/susfs # For development
 chmod 755 ${DEST_BIN_DIR}/susfs
 chmod 755 ${DEST_BIN_DIR}/ksu_susfs
 chmod 644 ${MODPATH}/post-fs-data.sh ${MODPATH}/service.sh ${MODPATH}/uninstall.sh ${MODPATH}/boot-completed.sh
