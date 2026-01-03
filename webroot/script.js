@@ -145,24 +145,24 @@ exec('susfs show version').then(result => {
 //
 //
 //
-;(() => {
-	const configID = 'config_hide_modules_img'
-	const mdSwitchID = 'switch_hide_modules_img'
-	exec(`grep "^${configID}=" ${PERSISTENT_DIR}/config.sh | cut -d'=' -f2`).then(result => {
-		if (result.errno !== 0) return
+// ;(() => {
+// 	const configID = 'config_hide_modules_img'
+// 	const mdSwitchID = 'switch_hide_modules_img'
+// 	exec(`grep "^${configID}=" ${PERSISTENT_DIR}/config.sh | cut -d'=' -f2`).then(result => {
+// 		if (result.errno !== 0) return
 
-		const element = document.querySelector(`md-switch#${mdSwitchID}`)
-		const value = parseInt(result.stdout)
-		element.selected = value
-		element.addEventListener('click', event => {
-			const enabled = event.target.shadowRoot.children[0].classList.contains('unselected')
-			const newConfigValue = +enabled
-			const newConfig = `${configID}=${newConfigValue}`
+// 		const element = document.querySelector(`md-switch#${mdSwitchID}`)
+// 		const value = parseInt(result.stdout)
+// 		element.selected = value
+// 		element.addEventListener('click', event => {
+// 			const enabled = event.target.shadowRoot.children[0].classList.contains('unselected')
+// 			const newConfigValue = +enabled
+// 			const newConfig = `${configID}=${newConfigValue}`
 
-			exec(`sed -i "s/^${configID}=.*/${newConfig}/" ${PERSISTENT_DIR}/config.sh`)
-		})
-	})
-})()
+// 			exec(`sed -i "s/^${configID}=.*/${newConfig}/" ${PERSISTENT_DIR}/config.sh`)
+// 		})
+// 	})
+// })()
 //
 //
 //
