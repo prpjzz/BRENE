@@ -1,5 +1,5 @@
-import {exec, toast, spawn} from 'kernelsu'
-import '@material/web/all.js'
+import { exec, toast, spawn } from './assets/kernelsu.js'
+import './assets/mwc.js';
 
 document.querySelector('div.preload-hidden').classList.remove('preload-hidden')
 

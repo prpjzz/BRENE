@@ -1,0 +1,48 @@
+@import url('https://mui.kernelsu.org/internal/insets.css');
+
+:root {
+    --md-sys-color-primary: #3b3b3b;
+    --md-sys-color-outline: #3b3b3b;
+    --md-sys-color-on-primary: #000000;
+    --md-sys-color-surface-container-highest: #000000;
+
+    --bg: #000000;
+    --fg: #ffffff;
+    --label-pad: 12px;
+    --item-gap: 12px;
+}
+body {
+    padding-top: var(--window-inset-top, 0px);
+    padding-bottom: var(--window-inset-bottom, 0px);
+    margin: 0;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: Roboto, system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+}
+.toggle-option {
+    display: flex;
+    align-items: center;
+    padding: 0 var(--label-pad);
+    margin-bottom: var(--item-gap);
+    pointer-events: none;
+}
+.title {
+    display: flex;
+    align-items: center;
+    padding: 0 var(--label-pad);
+    margin: 6px 0px;
+}
+.item-version {
+    font-size: 24px;
+    padding: 0px 10px;
+}
+md-switch {
+    margin-left: auto;
+    pointer-events: initial;
+}
+.preload-hidden {
+    display: none;
+}
