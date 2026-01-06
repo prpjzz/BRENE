@@ -5,7 +5,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>BRENE</title>
 
-		<link rel="stylesheet" href="./styles.css" type="text/css">
+		<link rel="stylesheet" href="./styles.css" type="text/css" />
+		<link rel="stylesheet" type="text/css" href="/internal/insets.css" />
 	</head>
 	<body>
 		<div class="preload-hidden">
@@ -17,12 +18,12 @@
 			</h1>
 
 			<label class="toggle-option">
-				Hide all paths in /data/local/tmp
+				Hide all items in /data/local/tmp
 				<md-switch selected id="switch_hide_data_local_tmp"></md-switch>
 			</label>
 
 			<label class="toggle-option">
-				Hide all paths in /sdcard/Android/data
+				Hide all items in /sdcard/Android/data
 				<md-switch selected id="switch_hide_sdcard_android_data"></md-switch>
 			</label>
 
@@ -62,12 +63,17 @@
 			</label>
 
 			<label class="toggle-option">
-				Enable Kernel Uname Spoofing
+				Enable Uname Spoofing
 				<md-switch selected id="switch_uname_spoofing"></md-switch>
 			</label>
 
 			<label class="toggle-option">
-				Enable Log
+				Enable Kernel Umount
+				<md-switch selected id="switch_kernel_umount"></md-switch>
+			</label>
+
+			<label class="toggle-option">
+				Enable SuSFS Logs
 				<md-switch selected id="switch_enable_log"></md-switch>
 			</label>
 

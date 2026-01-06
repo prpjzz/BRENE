@@ -24,7 +24,8 @@ fi
 
 
 # Enable kernel umount
-${KSU_BIN} feature set 1 1
+[[ $config_kernel_umount == 1 ]] && ${KSU_BIN} feature set 1 1 || ${KSU_BIN} feature set 1 0
+
 
 #### Hide the mmapped real file from various maps in /proc/self/ ####
 ## - Please note that it is better to do it in boot-completed starge

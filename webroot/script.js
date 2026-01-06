@@ -1,11 +1,12 @@
-import { exec, toast, spawn } from './assets/kernelsu.js'
-import './assets/mwc.js';
+import {exec, toast, spawn} from './assets/kernelsu.js'
+import './assets/mwc.js'
 
 document.querySelector('div.preload-hidden').classList.remove('preload-hidden')
 
 const MODDIR = '/data/adb/modules/brene'
 const PERSISTENT_DIR = '/data/adb/brene'
 const SUSFS_BIN = '/data/adb/ksu/bin/ksu_susfs'
+const KSU_BIN = '/data/adb/ksu/bin/ksud'
 
 // Load enabled features
 exec('susfs show enabled_features').then(result => {
@@ -312,5 +313,30 @@ exec('susfs show version').then(result => {
 			'"/data/adb/modules/${i}/disable";',
 			'done'
 		])
+	})
+})()
+//
+//
+//
+;(() => {
+	const configID = 'config_kernel_umount'
+	const mdSwitchID = 'switch_kernel_umount'
+	exec(`grep "^${configID}=" ${PERSISTENT_DIR}/config.sh | cut -d'=' -f2`).then(result => {
+		if (result.errno !== 0) return
+
+		const element = document.querySelector(`md-switch#${mdSwitchID}`)
+		const value = parseInt(result.stdout)
+		element.selected = value
+		element.addEventListener('click', event => {
+			const enabled = event.target.shadowRoot.children[0].classList.contains('unselected')
+			const newConfigValue = +enabled
+			const newConfig = `${configID}=${newConfigValue}`
+
+			exec(`sed -i "s/^${configID}=.*/${newConfig}/" ${PERSISTENT_DIR}/config.sh`)
+
+			enabled ? exec(`${KSU_BIN} feature set 1 1`) : exec(`${KSU_BIN} feature set 1 0`)
+
+			toast('No need to reboot')
+		})
 	})
 })()

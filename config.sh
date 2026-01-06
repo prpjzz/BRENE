@@ -9,5 +9,6 @@ config_hide_font_modules=1
 config_hide_custom_recovery_folders=1
 config_hide_rooted_app_folders=1
 config_hide_sdcard_android_data=1
+config_kernel_umount=1
 # config_kernel_release='default'
 # config_kernel_version='default'
