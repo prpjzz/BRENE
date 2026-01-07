@@ -66,6 +66,19 @@
 				<md-switch selected id="switch_uname_spoofing"></md-switch>
 			</label>
 
+			<div class="custom-uname-content">
+				<div class="custom-uname-switch-item">
+					<label>Set custom uname on boot</label>
+					<md-switch selected id="switch_custom_uname_set_on_boot"></md-switch>
+				</div>
+				<md-outlined-text-field label="Kernel Release" id="text_field_custom_uname_release"></md-outlined-text-field>
+				<md-outlined-text-field label="Kernel Version" id="text_field_custom_uname_version"></md-outlined-text-field>
+				<div class="custom-uname-buttons">
+					<md-outlined-button id="button_custom_uname_reset">Reset</md-outlined-button>
+					<md-filled-button id="button_custom_uname_apply">Apply</md-filled-button>
+				</div>
+			</div>
+
 			<label class="toggle-option">
 				AVC Log
 				<md-switch selected id="switch_enable_avc_log_spoofing"></md-switch>

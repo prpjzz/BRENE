@@ -340,3 +340,52 @@ exec('susfs show version').then(result => {
 		})
 	})
 })()
+//
+//
+//
+;(() => {
+	const configID = 'config_custom_uname_spoofing'
+	const mdSwitchID = 'switch_custom_uname_set_on_boot'
+	exec(`grep "^${configID}=" ${PERSISTENT_DIR}/config.sh | cut -d'=' -f2`).then(result => {
+		if (result.errno !== 0) return
+
+		const element = document.querySelector(`md-switch#${mdSwitchID}`)
+		const value = parseInt(result.stdout)
+		element.selected = value
+		element.addEventListener('click', event => {
+			const enabled = event.target.shadowRoot.children[0].classList.contains('unselected')
+			const newConfigValue = +enabled
+			const newConfig = `${configID}=${newConfigValue}`
+
+			exec(`sed -i "s/^${configID}=.*/${newConfig}/" ${PERSISTENT_DIR}/config.sh`)
+		})
+	})
+
+	const resetButton = document.querySelector(`md-outlined-button#button_custom_uname_reset`)
+	resetButton.addEventListener('click', () => {
+		const configID1 = 'config_custom_uname_kernel_release'
+		const configID2 = 'config_custom_uname_kernel_version'
+		const newConfig1 = `${configID1}='default'`
+		const newConfig2 = `${configID2}='default'`
+
+		exec(`sed -i "s/^${configID1}=.*/${newConfig1}/" ${PERSISTENT_DIR}/config.sh`)
+		exec(`sed -i "s/^${configID2}=.*/${newConfig2}/" ${PERSISTENT_DIR}/config.sh`)
+
+		exec(`${SUSFS_BIN} set_uname 'default' 'default'`)
+	})
+
+	const applyButton = document.querySelector(`md-filled-button#button_custom_uname_apply`)
+	applyButton.addEventListener('click', () => {
+		const configID1 = 'config_custom_uname_kernel_release'
+		const configID2 = 'config_custom_uname_kernel_version'
+		const newConfigValue1 = document.querySelector('#text_field_custom_uname_release').value
+		const newConfigValue2 = document.querySelector('#text_field_custom_uname_version').value
+		const newConfig1 = `${configID1}='${newConfigValue1}'`
+		const newConfig2 = `${configID2}='${newConfigValue2}'`
+
+		if (newConfigValue1 !== '') exec(`sed -i "s/^${configID1}=.*/${newConfig1}/" ${PERSISTENT_DIR}/config.sh`)
+		if (newConfigValue2 !== '') exec(`sed -i "s/^${configID2}=.*/${newConfig2}/" ${PERSISTENT_DIR}/config.sh`)
+
+		exec(`${SUSFS_BIN} set_uname "${newConfigValue1}" "${newConfigValue2}"`)
+	})
+})()

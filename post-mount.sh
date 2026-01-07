@@ -9,7 +9,9 @@ PERSISTENT_DIR=/data/adb/brene
 # you can get your uname args by running 'uname {-r|-v}' on your stock ROM #
 # pass 'default' to tell susfs to use the default value by uname #
 # ${SUSFS_BIN} set_uname 'default' 'default'
-if [[ $config_uname_spoofing == 1 ]]; then
+if [[ $config_custom_uname_spoofing == 1 ]]; then
+	${SUSFS_BIN} set_uname "${config_custom_uname_kernel_release}" "${config_custom_uname_kernel_version}"
+elif [[ $config_uname_spoofing == 1 ]]; then
 	kernel_release=$(uname -r | tr '[:upper:]' '[:lower:]')
 	string1=$(echo ${kernel_release} | cut -d'-' -f1)
 	string2=$(echo ${kernel_release} | cut -d'-' -f2)
