@@ -45,22 +45,22 @@ ${KSU_BIN} feature save
 ## Hide some zygisk modules ##
 # ${SUSFS_BIN} add_sus_map /data/adb/modules/my_module/zygisk/arm64-v8a.so
 if [[ $config_hide_zygisk_modules == 1 ]]; then
-	${SUSFS_BIN} add_sus_map /data/adb/rezygisk/lib/libzygisk.so
-	${SUSFS_BIN} add_sus_map /data/adb/rezygisk/lib64/libzygisk.so
-	${SUSFS_BIN} add_sus_map /data/adb/modules/zygisk_lsposed/zygisk/arm64-v8a.so
-	${SUSFS_BIN} add_sus_map /data/adb/modules/zygisk_lsposed/zygisk/armeabi-v7a.so
-	${SUSFS_BIN} add_sus_map /data/adb/modules/treat_wheel/zygisk/arm64-v8a.so
-	${SUSFS_BIN} add_sus_map /data/adb/modules/treat_wheel/zygisk/armeabi-v7a.so
-	${SUSFS_BIN} add_sus_map /data/adb/modules/playintegrityfix/zygisk/arm64-v8a.so
-	${SUSFS_BIN} add_sus_map /data/adb/modules/playintegrityfix/zygisk/armeabi-v7a.so
-	${SUSFS_BIN} add_sus_map /data/adb/modules/zygisk-sui/zygisk/arm64-v8a.so
-	${SUSFS_BIN} add_sus_map /data/adb/modules/zygisk-sui/zygisk/armeabi-v7a.so
+	[ -f /data/adb/rezygisk/lib/libzygisk.so ] && ${SUSFS_BIN} add_sus_map /data/adb/rezygisk/lib/libzygisk.so
+	[ -f /data/adb/rezygisk/lib64/libzygisk.so ] && ${SUSFS_BIN} add_sus_map /data/adb/rezygisk/lib64/libzygisk.so
+	[ -f /data/adb/modules/zygisk_lsposed/zygisk/arm64-v8a.so ] && ${SUSFS_BIN} add_sus_map /data/adb/modules/zygisk_lsposed/zygisk/arm64-v8a.so
+	[ -f /data/adb/modules/zygisk_lsposed/zygisk/armeabi-v7a.so ] && ${SUSFS_BIN} add_sus_map /data/adb/modules/zygisk_lsposed/zygisk/armeabi-v7a.so
+	[ -f /data/adb/modules/treat_wheel/zygisk/arm64-v8a.so ] && ${SUSFS_BIN} add_sus_map /data/adb/modules/treat_wheel/zygisk/arm64-v8a.so
+	[ -f /data/adb/modules/treat_wheel/zygisk/armeabi-v7a.so ] && ${SUSFS_BIN} add_sus_map /data/adb/modules/treat_wheel/zygisk/armeabi-v7a.so
+	[ -f /data/adb/modules/playintegrityfix/zygisk/arm64-v8a.so ] && ${SUSFS_BIN} add_sus_map /data/adb/modules/playintegrityfix/zygisk/arm64-v8a.so
+	[ -f /data/adb/modules/playintegrityfix/zygisk/armeabi-v7a.so ] && ${SUSFS_BIN} add_sus_map /data/adb/modules/playintegrityfix/zygisk/armeabi-v7a.so
+	[ -f /data/adb/modules/zygisk-sui/zygisk/arm64-v8a.so ] && ${SUSFS_BIN} add_sus_map /data/adb/modules/zygisk-sui/zygisk/arm64-v8a.so
+	[ -f /data/adb/modules/zygisk-sui/zygisk/armeabi-v7a.so ] && ${SUSFS_BIN} add_sus_map /data/adb/modules/zygisk-sui/zygisk/armeabi-v7a.so
 fi
 
 ## Hide some map traces caused by some font modules ##
 if [[ $config_hide_font_modules == 1 ]]; then
-	${SUSFS_BIN} add_sus_map /system/fonts/Roboto-Regular.ttf
-	${SUSFS_BIN} add_sus_map /system/fonts/RobotoStatic-Regular.ttf
+	[ -f /system/fonts/Roboto-Regular.ttf ] && ${SUSFS_BIN} add_sus_map /system/fonts/Roboto-Regular.ttf
+	[ -f /system/fonts/RobotoStatic-Regular.ttf ] && ${SUSFS_BIN} add_sus_map /system/fonts/RobotoStatic-Regular.ttf
 fi
 
 
@@ -72,7 +72,7 @@ fi
 # ${SUSFS_BIN} add_sus_path_loop /sys/block/loop0
 if [[ $config_hide_data_local_tmp == 1 ]]; then
 	for i in $(ls /data/local/tmp); do
-		${SUSFS_BIN} add_sus_path_loop "/data/local/tmp/$i"
+		${SUSFS_BIN} add_sus_path_loop "/data/local/tmp/${i}"
 	done
 fi
 
@@ -92,7 +92,7 @@ if [ -f "${PERSISTENT_DIR}/custom_sus_map.txt" ]; then
 	while IFS= read -r i; do
 		# Skip empty lines or comments
 		[[ -z "${i}" || "${i}" == "#"* ]] && continue
-		${SUSFS_BIN} add_sus_map ${i}
+		[ -f "${i}" ] && ${SUSFS_BIN} add_sus_map "${i}"
 	done < "${PERSISTENT_DIR}/custom_sus_map.txt"
 fi
 
@@ -101,7 +101,8 @@ if [ -f "${PERSISTENT_DIR}/custom_sus_path.txt" ]; then
 	while IFS= read -r i; do
 		# Skip empty lines or comments
 		[[ -z "${i}" || "${i}" == "#"* ]] && continue
-		${SUSFS_BIN} add_sus_path ${i}
+		[ -d "${i}" ] && ${SUSFS_BIN} add_sus_path "${i}"
+		[ -f "${i}" ] && ${SUSFS_BIN} add_sus_path "${i}"
 	done < "${PERSISTENT_DIR}/custom_sus_path.txt"
 fi
 
@@ -110,11 +111,12 @@ if [ -f "${PERSISTENT_DIR}/custom_sus_path_loop.txt" ]; then
 	while IFS= read -r i; do
 		# Skip empty lines or comments
 		[[ -z "${i}" || "${i}" == "#"* ]] && continue
-		${SUSFS_BIN} add_sus_path_loop ${i}
+		[ -d "${i}" ] && ${SUSFS_BIN} add_sus_path_loop "${i}"
+		[ -f "${i}" ] && ${SUSFS_BIN} add_sus_path_loop "${i}"
 	done < "${PERSISTENT_DIR}/custom_sus_path_loop.txt"
 fi
 
-for i in {0..11}; do
+for i in {0..4}; do
 	${SUSFS_BIN} set_sdcard_root_path /storage/emulated/0
 	${SUSFS_BIN} set_android_data_root_path /storage/emulated/0/Android/data
 
@@ -122,31 +124,25 @@ for i in {0..11}; do
 	## Now we can add the path ##
 	if [[ $config_hide_sdcard_android_data == 1 ]]; then
 		for i in $(ls /storage/emulated/0/Android/data); do
-			${SUSFS_BIN} add_sus_path /storage/emulated/0/Android/data/${i}
+			${SUSFS_BIN} add_sus_path "/storage/emulated/0/Android/data/${i}"
 		done
-		# for i in $(ls /sdcard/Android/media); do
-		# 	${SUSFS_BIN} add_sus_path /sdcard/Android/media/${i}
-		# done
-		# for i in $(ls /sdcard/Android/obb); do
-		# 	${SUSFS_BIN} add_sus_path /sdcard/Android/obb/${i}
-		# done
 	fi
 
 	#### Hide path like /sdcard/<target_root_dir> from all user app processes without root access ####
 	## Now we can add the path ##
 	if [[ $config_hide_custom_recovery_folders == 1 ]]; then
-		${SUSFS_BIN} add_sus_path /storage/emulated/TWRP
-		${SUSFS_BIN} add_sus_path /storage/emulated/0/Fox
-		${SUSFS_BIN} add_sus_path /storage/emulated/0/TWRP
+		[ -d /storage/emulated/TWRP ] && ${SUSFS_BIN} add_sus_path /storage/emulated/TWRP
+		[ -d /storage/emulated/0/Fox ] && ${SUSFS_BIN} add_sus_path /storage/emulated/0/Fox
+		[ -d /storage/emulated/0/TWRP ] && ${SUSFS_BIN} add_sus_path /storage/emulated/0/TWRP
 	fi
 	
 	if [[ $config_hide_rooted_app_folders == 1 ]]; then
-		${SUSFS_BIN} add_sus_path /storage/emulated/0/MT2
-		${SUSFS_BIN} add_sus_path /storage/emulated/0/OhMyFont
-		${SUSFS_BIN} add_sus_path /storage/emulated/0/AppManager
+		[ -d /storage/emulated/0/MT2 ] && ${SUSFS_BIN} add_sus_path /storage/emulated/0/MT2
+		[ -d /storage/emulated/0/OhMyFont ] && ${SUSFS_BIN} add_sus_path /storage/emulated/0/OhMyFont
+		[ -d /storage/emulated/0/AppManager ] && ${SUSFS_BIN} add_sus_path /storage/emulated/0/AppManager
 	fi
 
-	sleep 5
+	sleep 10
 done
 
 # EOF
