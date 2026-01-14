@@ -82,12 +82,10 @@ fi
 ## First we need to wait until files are accessible in /sdcard ##
 until [ -d "/storage/emulated/0/Android/data" ]; do sleep 1; done
 
-items=0
-while true
-do
+while true; do
 	items=$(ls /storage/emulated/0/Android/data | wc -l)
 	sleep 5
-	[[ "${items}" == "$(ls /storage/emulated/0/Android/data | wc -l)" ]] && break
+	[[ "${items}" -eq "$(ls /storage/emulated/0/Android/data | wc -l)" ]] && break
 done
 
 ## Next we need to set the path of /sdcard/ to tell kernel where the actual /sdcard is ##
