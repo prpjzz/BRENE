@@ -15,6 +15,7 @@ const configs = [
 		action: enabled => setFeature(`${SUSFS_BIN} hide_sus_mnts_for_all_procs ${enabled ? 1 : 0}`)
 	},
 	{id: 'uname_spoofing'},
+	{id: 'uname2_spoofing'},
 	{id: 'hide_data_local_tmp'},
 	// { id: 'hide_modules_img' },
 	{id: 'hide_zygisk_modules'},
@@ -67,7 +68,7 @@ function updateConfig2(config, value) {
 	})
 }
 
-// Helper funtino to set config immedialtely that no need to reboot
+// Helper function to set config immedialtely that no need to reboot
 function setFeature(cmd) {
 	exec(cmd).then(result => {
 		toast(result.errno === 0 ? 'No need to reboot' : result.stderr)
