@@ -45,8 +45,6 @@ ${KSU_BIN} feature save
 ## Hide some zygisk modules ##
 # ${SUSFS_BIN} add_sus_map /data/adb/modules/my_module/zygisk/arm64-v8a.so
 if [[ $config_hide_zygisk_modules == 1 ]]; then
-	[ -f /data/adb/rezygisk/lib/libzygisk.so ] && ${SUSFS_BIN} add_sus_map /data/adb/rezygisk/lib/libzygisk.so
-	[ -f /data/adb/rezygisk/lib64/libzygisk.so ] && ${SUSFS_BIN} add_sus_map /data/adb/rezygisk/lib64/libzygisk.so
 	[ -f /data/adb/modules/zygisk_lsposed/zygisk/arm64-v8a.so ] && ${SUSFS_BIN} add_sus_map /data/adb/modules/zygisk_lsposed/zygisk/arm64-v8a.so
 	[ -f /data/adb/modules/zygisk_lsposed/zygisk/armeabi-v7a.so ] && ${SUSFS_BIN} add_sus_map /data/adb/modules/zygisk_lsposed/zygisk/armeabi-v7a.so
 	[ -f /data/adb/modules/treat_wheel/zygisk/arm64-v8a.so ] && ${SUSFS_BIN} add_sus_map /data/adb/modules/treat_wheel/zygisk/arm64-v8a.so
