@@ -4,3 +4,4 @@ version=v0.0.18
 versionCode=1
 author=rrr333nnn333, KOWX712, sidex15 & simonpunk@gitlab.com
 description=Kernel: ❓, Module: ❓, Hiding: ❓, ReZygisk: ❓, A SuSFS module for custom kernels with SuSFS patches
+updateJson=https://raw.githubusercontent.com/prpjzz/BRENE/refs/heads/main/update.json
